@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  @page { size: A4; margin: 0; }
+  body { font-family: 'Segoe UI', 'Calibri', Arial, sans-serif; color: #1a1a2e; font-size: 9.4pt; line-height: 1.38; }
+
+  .page {
+    width: 210mm;
+    min-height: 296mm;
+    max-height: 297mm;
+    padding: 0;
+    page-break-after: always;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+  }
+
+  /* ===== SIDEBAR ===== */
+  .sidebar {
+    width: 62mm;
+    min-height: 296mm;
+    background: #0b1b2b;
+    padding: 14mm 8mm 10mm 8mm;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .avatar-wrap {
+    text-align: center;
+    margin-bottom: 4px;
+  }
+  .avatar {
+    width: 52mm;
+    height: 52mm;
+    border-radius: 50%;
+    background: #10263a;
+    border: 3px solid #e4a11b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 8px auto;
+    font-size: 22pt;
+    color: #e4a11b;
+    font-weight: 800;
+    letter-spacing: 1px;
+  }
+  .sidebar-name {
+    color: #ffffff;
+    font-size: 11pt;
+    font-weight: 800;
+    text-align: center;
+    letter-spacing: 0.5px;
+    line-height: 1.2;
+    margin-bottom: 3px;
+  }
+  .sidebar-role {
+    color: #e4a11b;
+    font-size: 8pt;
+    font-weight: 700;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    line-height: 1.3;
+  }
+
+  .sb-section { }
+  .sb-title {
+    font-size: 7pt;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #e4a11b;
+    border-bottom: 1px solid rgba(228,161,27,0.3);
+    padding-bottom: 4px;
+    margin-bottom: 7px;
+  }
+  .sb-row {
+    font-size: 8pt;
+    color: rgba(255,255,255,0.82);
+    margin-bottom: 4px;
+    line-height: 1.4;
+  }
+  .sb-row b { color: #ffffff; }
+  .sb-row .icon { margin-right: 4px; }
+
+  /* Languages */
+  .lang-item { margin-bottom: 7px; }
+  .lang-name {
+    font-size: 8.5pt;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 3px;
+  }
+  .lang-level {
+    font-size: 7.5pt;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 3px;
+  }
+  .lang-bar {
+    height: 4px;
+    background: rgba(255,255,255,0.12);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .lang-fill {
+    height: 100%;
+    background: #e4a11b;
+    border-radius: 2px;
+  }
+
+  /* Skills chips sidebar */
+  .sb-chip {
+    display: inline-block;
+    background: rgba(228,161,27,0.12);
+    border: 1px solid rgba(228,161,27,0.3);
+    color: rgba(255,255,255,0.85);
+    font-size: 7.5pt;
+    padding: 2px 6px;
+    border-radius: 2px;
+    margin: 0 3px 4px 0;
+  }
+
+  /* ===== MAIN CONTENT ===== */
+  .main {
+    flex: 1;
+    padding: 12mm 12mm 10mm 11mm;
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+  }
+
+  /* Header strip */
+  .main-header {
+    border-bottom: 2.5px solid #e4a11b;
+    padding-bottom: 8px;
+    margin-bottom: 2px;
+  }
+  .main-name {
+    font-size: 19pt;
+    font-weight: 800;
+    color: #0b1b2b;
+    letter-spacing: 0.5px;
+    line-height: 1.1;
+  }
+  .main-title {
+    font-size: 9.5pt;
+    font-weight: 700;
+    color: #c8102e;
+    letter-spacing: 0.3px;
+    margin-top: 3px;
+  }
+  .main-subtitle {
+    font-size: 8.5pt;
+    color: #5b6b7a;
+    margin-top: 2px;
+    font-style: italic;
+  }
+
+  /* Section */
+  .sec { }
+  .sec-title {
+    display: flex;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+  .sec-bar { width: 4px; height: 14px; background: #c8102e; border-radius: 1px; margin-right: 6px; flex-shrink: 0; }
+  .sec-title h2 {
+    font-size: 9pt;
+    font-weight: 800;
+    color: #0b1b2b;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+  }
+  .sec-line { flex: 1; height: 1px; background: #dce4ec; margin-left: 8px; }
+
+  .perfil {
+    text-align: justify;
+    font-size: 9pt;
+    color: #2a3a4a;
+    line-height: 1.45;
+  }
+  .perfil b { color: #0b1b2b; }
+
+  /* HIGHLIGHT BOX */
+  .highlight-box {
+    background: #f5f8fb;
+    border-left: 4px solid #e4a11b;
+    border-radius: 3px;
+    padding: 8px 12px;
+    font-size: 8.7pt;
+    color: #0b1b2b;
+    line-height: 1.5;
+  }
+  .highlight-box b { color: #c8102e; }
+
+  /* Jobs */
+  .job { margin-bottom: 8px; page-break-inside: avoid; }
+  .job-head { display: flex; justify-content: space-between; align-items: baseline; }
+  .job-company { font-size: 9.8pt; font-weight: 800; color: #0b1b2b; }
+  .job-date { font-size: 8pt; font-weight: 700; color: #c8102e; white-space: nowrap; padding-left: 8px; }
+  .job-role { font-weight: 700; font-size: 8.8pt; font-style: italic; color: #5b6b7a; margin-bottom: 3px; }
+  .job ul { margin-left: 13px; }
+  .job li { margin-bottom: 2.5px; text-align: justify; font-size: 8.7pt; }
+  .job li::marker { color: #c8102e; }
+
+  /* Compact experience list */
+  .exp-compact .item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 3px;
+    page-break-inside: avoid;
+    font-size: 8.3pt;
+  }
+  .exp-compact .item .left { color: #2a3a4a; }
+  .exp-compact .item .left b { color: #0b1b2b; }
+  .exp-compact .item .cargo { font-style: italic; color: #5b6b7a; }
+  .exp-compact .item .date { font-size: 7.8pt; color: #999; white-space: nowrap; padding-left: 8px; }
+
+  /* Education */
+  .edu-item { margin-bottom: 5px; page-break-inside: avoid; font-size: 8.8pt; }
+  .edu-item .degree { font-weight: 700; color: #0b1b2b; }
+  .edu-item .detail { color: #5b6b7a; font-style: italic; }
+
+  .footer-strip {
+    position: absolute;
+    bottom: 5mm;
+    left: 0;
+    right: 0;
+    font-size: 7pt;
+    color: rgba(255,255,255,0.35);
+    text-align: center;
+    padding: 0 8mm;
+  }
+
+  /* Page 2 sidebar continues without avatar */
+  .sidebar-p2 {
+    width: 62mm;
+    min-height: 296mm;
+    background: #0b1b2b;
+    padding: 14mm 8mm 10mm 8mm;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .sb-p2-name {
+    color: rgba(255,255,255,0.5);
+    font-size: 8pt;
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid rgba(228,161,27,0.2);
+    padding-bottom: 8px;
+    margin-bottom: 4px;
+  }
+  .sb-p2-page {
+    color: #e4a11b;
+    font-size: 7pt;
+    text-align: center;
+    margin-bottom: 6px;
+  }
+</style>
+</head>
+<body>
+
+<!-- ==================== PAGE 1 ==================== -->
+<div class="page">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="avatar-wrap">
+      <div class="avatar">AO</div>
+      <div class="sidebar-name">ALEJANDRO<br>OCHOA PÉREZ</div>
+      <div class="sidebar-role">Representante Taili Electric<br>Colombia · LATAM</div>
+    </div>
+
+    <div class="sb-section">
+      <div class="sb-title">Contacto</div>
+      <div class="sb-row"><b>📍</b> Medellín, Antioquia, Colombia</div>
+      <div class="sb-row"><b>📞</b> (300) 784 9624</div>
+      <div class="sb-row"><b>✉️</b> alejandro8ap@gmail.com</div>
+      <div class="sb-row"><b>🪪</b> CC 79.673.246 · T.P. AN205-44527</div>
+    </div>
+
+    <div class="sb-section">
+      <div class="sb-title">Idiomas</div>
+      <div class="lang-item">
+        <div class="lang-name">🇪🇸 Español</div>
+        <div class="lang-level">Nativo</div>
+        <div class="lang-bar"><div class="lang-fill" style="width:100%"></div></div>
+      </div>
+      <div class="lang-item">
+        <div class="lang-name">🇬🇧 Inglés</div>
+        <div class="lang-level">Avanzado (C1)</div>
+        <div class="lang-bar"><div class="lang-fill" style="width:88%"></div></div>
+      </div>
+      <div class="lang-item">
+        <div class="lang-name">🇫🇷 Francés</div>
+        <div class="lang-level">Avanzado (B2)</div>
+        <div class="lang-bar"><div class="lang-fill" style="width:78%"></div></div>
+      </div>
+    </div>
+
+    <div class="sb-section">
+      <div class="sb-title">Herramientas</div>
+      <span class="sb-chip">AutoCAD 2D/3D</span>
+      <span class="sb-chip">ETAP</span>
+      <span class="sb-chip">Excel Avanzado</span>
+      <span class="sb-chip">KAVECOL</span>
+      <span class="sb-chip">MATLAB</span>
+      <span class="sb-chip">Python</span>
+      <span class="sb-chip">MS Office 365</span>
+    </div>
+
+    <div class="sb-section">
+      <div class="sb-title">Normas y Estándares</div>
+      <div class="sb-row">✅ RETIE (Res. 40284/2026)</div>
+      <div class="sb-row">✅ NTC 2050</div>
+      <div class="sb-row">✅ ISO 9001</div>
+      <div class="sb-row">✅ OSHAS 18001</div>
+      <div class="sb-row">✅ PMI (Gestión de Proyectos)</div>
+    </div>
+
+    <div class="footer-strip">Alejandro Ochoa Pérez · alejandro8ap@gmail.com · (300) 784 9624 · Pág. 1 / 2</div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <div class="main-header">
+      <div class="main-name">ALEJANDRO OCHOA PÉREZ</div>
+      <div class="main-title">Ingeniero Electricista · Gerente Comercial de Transformadores</div>
+      <div class="main-subtitle">Candidato a Representante y Agente Comercial de Taili Electric Co., Ltd. en Colombia y LATAM</div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-title"><span class="sec-bar"></span><h2>Perfil Ejecutivo</h2><span class="sec-line"></span></div>
+      <p class="perfil">
+        Ingeniero electricista con <b>más de 20 años de experiencia</b> en el sector eléctrico colombiano y latinoamericano,
+        con <b>experiencia directa en diseño y fabricación de transformadores de distribución</b> (5–25 kVA) y en la gerencia
+        de una empresa propia del sector: <b>Transformadores KAVE SAS</b>. Habla <b>español (nativo), inglés (C1) y francés (B2)</b>,
+        lo que permite operar sin barreras en todos los mercados objetivo de Taili en América Latina, Norteamérica y Europa.
+        Conoce de primera mano los clientes, las normas <b>RETIE</b>, los competidores y los canales de distribución del
+        mercado colombiano. No viene a aprender un oficio: viene a <b>construir el negocio de Taili en Colombia y LATAM</b>.
+      </p>
+    </div>
+
+    <div class="highlight-box">
+      <b>Propuesta de valor para Taili Electric:</b> Alejandro Ochoa es el único perfil en Colombia que combina
+      (1) experiencia técnica en diseño de transformadores, (2) empresa propia activa en el sector,
+      (3) red de clientes en Bogotá, Medellín, Cali y Barranquilla, y (4) capacidad trilingüe para representar
+      a Taili ante clientes, distribuidores e instituciones en toda América Latina.
+    </div>
+
+    <div class="sec">
+      <div class="sec-title"><span class="sec-bar"></span><h2>Experiencia Clave en Transformadores</h2><span class="sec-line"></span></div>
+
+      <div class="job">
+        <div class="job-head">
+          <span class="job-company">TRANSFORMADORES KAVE S.A.S. — Fundador y Gerente</span>
+          <span class="job-date">2023 – Presente</span>
+        </div>
+        <div class="job-role">Gerente General · Diseño, fabricación y comercialización de transformadores en Colombia</div>
+        <ul>
+          <li>Fundó y opera <b>Transformadores KAVE SAS</b>, empresa colombiana especializada en transformadores de distribución monofásicos y trifásicos (5, 10, 15 y 25 kVA, 7.620 V entrada / 240–120 V salida).</li>
+          <li>Desarrolló el <b>software KAVECOL</b> y herramientas de cálculo propias para diseño de transformadores — know-how transferible directamente al portafolio de Taili.</li>
+          <li>Coordina las áreas Comercial, Compras y Producción; gestiona la documentación técnica, las especificaciones del cliente y el cumplimiento RETIE.</li>
+          <li><b>Red de clientes activa</b> en Bogotá, Medellín, Cali y Barranquilla: constructoras, utilities, industria, minería y proyectos de energías renovables.</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="job-head">
+          <span class="job-company">TRANSFORMADORES MAXWELL</span>
+          <span class="job-date">Oct 2012 – Ago 2013 · Ago 2002 – Feb 2003</span>
+        </div>
+        <div class="job-role">Ingeniero Electricista · Diseño y fabricación de transformadores monofásicos y trifásicos</div>
+        <ul>
+          <li>Diseño y fabricación de transformadores de distribución: cálculo de devanados, núcleos y parámetros eléctricos.</li>
+          <li>Elaboración de planos y memorias de cálculo; soporte técnico a Producción en pruebas y ensayos.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-title"><span class="sec-bar"></span><h2>Por Qué Medellín y Por Qué Ahora</h2><span class="sec-line"></span></div>
+      <p class="perfil">
+        Alejandro está radicado en <b>Medellín</b>, epicentro del Clúster de Energía Sostenible de Colombia (900+ empresas,
+        30.000 empleos directos), donde operan EPM, ISA, ISAGEN y el laboratorio de certificación RETIE <b>CIDET</b>.
+        La aprobación de la Resolución RETIE 40284 de 2026 abre una ventana de mercado de 12–18 meses antes de que
+        los competidores (WEG, ABB, Siemens) consoliden su posición local.
+        <b>Quien llegue primero con fábrica y stock en Colombia gana el mercado.</b>
+      </p>
+    </div>
+
+  </div>
+</div>
+
+<!-- ==================== PAGE 2 ==================== -->
+<div class="page">
+
+  <!-- SIDEBAR P2 -->
+  <div class="sidebar-p2">
+    <div class="sb-p2-name">ALEJANDRO OCHOA PÉREZ</div>
+    <div class="sb-p2-page">Página 2 / 2</div>
+
+    <div class="sb-section">
+      <div class="sb-title">Mercados que Cubre</div>
+      <div class="sb-row">🇨🇴 <b>Colombia</b> — Bogotá, Medellín, Cali, Barranquilla</div>
+      <div class="sb-row">🇲🇽 <b>México</b> — TLC-G3 vigente desde 1995</div>
+      <div class="sb-row">🌎 <b>CAN</b> — Perú, Ecuador, Bolivia (arancel 0%)</div>
+      <div class="sb-row">🌍 <b>Centroamérica</b> — TLC Triángulo Norte</div>
+      <div class="sb-row">🇨🇱 <b>Chile</b> — TLC Colombia–Chile</div>
+      <div class="sb-row">🇻🇪 🇵🇦 <b>Venezuela, Panamá, Caribe</b></div>
+    </div>
+
+    <div class="sb-section">
+      <div class="sb-title">Portafolio Taili a Representar</div>
+      <div class="sb-row">⚡ Transformadores de distribución</div>
+      <div class="sb-row">⚡ Transformadores de potencia</div>
+      <div class="sb-row">🏗️ Subestaciones prefabricadas</div>
+      <div class="sb-row">🔲 Celdas y paneles MT</div>
+      <div class="sb-row">🔌 Switchgear y equipos de maniobra</div>
+      <div class="sb-row">📦 Stock local en Medellín</div>
+    </div>
+
+    <div class="sb-section">
+      <div class="sb-title">Segmentos Objetivo</div>
+      <div class="sb-row">🔆 Energías renovables (solar, eólica)</div>
+      <div class="sb-row">⛏️ Minería (cobre, carbón, oro)</div>
+      <div class="sb-row">🏗️ Construcción e infraestructura</div>
+      <div class="sb-row">💡 Utilities (EPM, Codensa, Celsia)</div>
+      <div class="sb-row">🏭 Industria y manufactura</div>
+      <div class="sb-row">🛢️ Petroquímica y puertos</div>
+    </div>
+
+    <div class="footer-strip">Alejandro Ochoa Pérez · alejandro8ap@gmail.com · (300) 784 9624 · Pág. 2 / 2</div>
+  </div>
+
+  <!-- MAIN P2 -->
+  <div class="main">
+
+    <div class="main-header" style="margin-bottom:4px;">
+      <div style="font-size:10pt;font-weight:800;color:#0b1b2b;letter-spacing:0.3px;">Trayectoria en Proyectos Eléctricos de Alta Complejidad</div>
+      <div style="font-size:8pt;color:#5b6b7a;margin-top:2px;">20+ años · Alta tensión · Media tensión · Subestaciones · Líneas de transmisión</div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-title"><span class="sec-bar"></span><h2>Experiencia Complementaria Destacada</h2><span class="sec-line"></span></div>
+      <div class="exp-compact">
+        <div class="item"><span class="left"><b>Consorcio INNMAC-DCI / Celsia Colombia E.S.P.</b> — <span class="cargo">Ingeniero Residente</span>. Reubicación de línea de 115 kV Flandes-Gualanday; diseño de teleférico para transporte de materiales.</span><span class="date">2024</span></div>
+        <div class="item"><span class="left"><b>S.D. S.A.S.</b> — <span class="cargo">Ingeniero Residente</span>. Montaje de 3 torres en variante de líneas a 220 kV Fundación–Río Córdoba 1 y 2 (ISA-TRANSELCA).</span><span class="date">2023</span></div>
+        <div class="item"><span class="left"><b>GrupoSIT S.A.S.</b> — <span class="cargo">Ingeniero de Proyectos</span>. Instalaciones Coomeva Medellín; dirección de 14 electricistas; cumplimiento RETIE y NTC 2050.</span><span class="date">2021–2022</span></div>
+        <div class="item"><span class="left"><b>Inversiones La Rondalla</b> — <span class="cargo">Ingeniero Residente</span>. Instalación de 3 bodegas, cada una con transformador de 75 kVA.</span><span class="date">2019–2020</span></div>
+        <div class="item"><span class="left"><b>INGEMA S.A.S.</b> — <span class="cargo">Ingeniero Residente</span>. Subestación Gramalote a 34,5 kV.</span><span class="date">2018</span></div>
+        <div class="item"><span class="left"><b>Ing. y Gestión Interservicios S.A.S.</b> — <span class="cargo">Ingeniero Residente</span>. Inspección RETIE de redes subterráneas EDEQ en Armenia (en asocio con CIDET).</span><span class="date">2015–2016</span></div>
+        <div class="item"><span class="left"><b>Obras y Diseños S.A.S.</b> — <span class="cargo">Ingeniero Residente</span>. Mantenimiento de redes de transmisión y distribución en Tolima (ENERTOLIMA); línea a 230 kV Natagaima.</span><span class="date">2014</span></div>
+        <div class="item"><span class="left"><b>InstelEC S.A.</b> — <span class="cargo">Ingeniero Residente</span>. Director del tendido de fibra óptica OPGW/ADSS sobre líneas a 110 y 230 kV (Empresa de Energía de Bogotá).</span><span class="date">2011–2012</span></div>
+        <div class="item"><span class="left"><b>FAISMON S.A.S.</b> — <span class="cargo">Coordinador de Obra</span>. Instalación eléctrica de máquina DIEFFENBACHER.</span><span class="date">2011</span></div>
+        <div class="item"><span class="left"><b>HMV / ISA – Siemens</b> — <span class="cargo">Ingeniero Residente</span>. Subestación de Ocaña; coordinación de malla a tierra en patios de 500 y 230 kV.</span><span class="date">2006</span></div>
+        <div class="item"><span class="left"><b>InstelEC S.A. — Trinidad y Tobago 🇹🇹</b> — <span class="cargo">Ingeniero Residente Internacional</span>. Gestión ISO 9001 y OSHAS 18001; mantenimiento de línea de 66 kV y construcción de línea de 132 kV.</span><span class="date">2005–2006</span></div>
+        <div class="item"><span class="left"><b>Generar S.A. E.S.P.</b> — <span class="cargo">Ingeniero Electricista</span>. Operación y mantenimiento de la Central Hidroeléctrica Río Piedras en Jericó, Antioquia.</span><span class="date">2003–2004</span></div>
+        <div class="item"><span class="left"><b>Transformadores Maxwell (1ª etapa)</b> — <span class="cargo">Ingeniero Electricista</span>. Diseño y fabricación de transformadores de distribución mono y trifásicos.</span><span class="date">2002–2003</span></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-title"><span class="sec-bar"></span><h2>Educación y Formación</h2><span class="sec-line"></span></div>
+      <div class="edu-item">
+        <span class="degree">Ingeniería Eléctrica</span>
+        <span class="detail"> — Pregrado universitario</span>
+      </div>
+      <div class="edu-item">
+        <span class="degree">Especialización en Mantenimiento Industrial</span>
+        <span class="detail"> — Posgrado</span>
+      </div>
+      <div class="edu-item">
+        <span class="degree">Diplomado en Pedagogía, RETIE y Gestión de Proyectos</span>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-title"><span class="sec-bar"></span><h2>Lo Que Alejandro Construirá para Taili Electric</h2><span class="sec-line"></span></div>
+      <div class="highlight-box" style="font-size:8.5pt;">
+        Al finalizar la inmersión en China (enero–abril 2027), Alejandro entregará a Taili Electric:<br><br>
+        <b>1. Plan Estratégico Taili Colombia 2027–2030</b> — proyección de ventas, segmentos, distribuidores y punto de equilibrio de la fábrica.<br>
+        <b>2. Red de clientes calificada</b> — Bogotá, Medellín, Cali, Barranquilla: constructoras, utilities, minería, renovables.<br>
+        <b>3. Operación comercial activa</b> — con stock local en Medellín para entrega en 2–4 semanas vs. 60–90 días de importación.<br>
+        <b>4. Expansión a LATAM</b> — México, Centroamérica y Comunidad Andina como mercados secundarios en 2028–2029.<br>
+        <b>5. Certificación RETIE acelerada</b> — gracias a la proximidad con CIDET y el conocimiento normativo existente.
+      </div>
+    </div>
+
+    <div style="margin-top:8px;font-size:7.8pt;color:#999;font-style:italic;border-top:1px solid #dce4ec;padding-top:6px;">
+      Certificaciones laborales de 17 empresas disponibles. Referencias personales y laborales suministradas en entrevista. Disponibilidad inmediata para viaje a China — enero 2027.
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
